@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">SELECTA</string>
+    <string name="name">ИМЯ</string>
+    <string name="phone">ТЕЛЕФОН</string>
+    <string name="in">ВОЙТИ</string>
+    <string name="reg">Зарегестрироваться</string>
+    <string name="input">Введите данные</string>
+    <string name="negative">Отмена</string>
+    <string name="pass">ПАРОЛЬ</string>
+    <string name="login">Email</string>
+    <string name="error_login">Введите Email</string>
+    <string name="error_pass">Введите пароль</string>
+    <string name="ok">Успешно</string>
+    <string name="priem">ПРИНЯТЬ</string>
+    <string name="vidacha">ВЫДАТЬ</string>
+    <string name="editor">РЕДАКТИРОВАТЬ</string>
+    <string name="info">ИНФО</string>
+    <string name="hi">ПРИВЕТ</string>
+    <string name="alum">Алюминий</string>
+    <string name="sheet">Лист</string>
+    <string name="box">Бокс</string>
+    <string name="pipe">Труба</string>
+    <string name="article">артикл</string>
+    <string name="location">место хранения</string>
+    <string name="name_product">название</string>
+    <string name="param">параметры</string>
+
+
+</resources>

@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1059783398576",
+    "firebase_url": "https://selectadatabase-12d20-default-rtdb.firebaseio.com",
+    "project_id": "selectadatabase-12d20",
+    "storage_bucket": "selectadatabase-12d20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059783398576:android:1d1837f0f27aca2c7c1775",
+        "android_client_info": {
+          "package_name": "com.example.scladselecta"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsCBhuKtSXH15yo6xqDPqA1MqZa0NJcWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059783398576:android:45ecb00d444199527c1775",
+        "android_client_info": {
+          "package_name": "com.example.selecta"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsCBhuKtSXH15yo6xqDPqA1MqZa0NJcWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059783398576:android:7fd1dacf92cf4fcd7c1775",
+        "android_client_info": {
+          "package_name": "com.example.selectasclad"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsCBhuKtSXH15yo6xqDPqA1MqZa0NJcWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

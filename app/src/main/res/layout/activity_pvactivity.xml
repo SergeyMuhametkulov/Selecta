@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PVActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
+    <Button
+        android:id="@+id/btn_met"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_alignParentLeft="true"
+        android:text="Железо"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:background="#FB8C00"
+        android:textSize="30dp"/>
+    <Button
+        android:id="@+id/btn_al"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:background="#F1EDED"
+        android:text="Алюминий"
+        android:textSize="30dp"/>
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:divider="@color/black"
+        android:dividerHeight="1dp"
+        android:layout_below="@id/btn_al"/>
+
+
+</RelativeLayout>

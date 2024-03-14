@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#040404</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="priem">#0A5FF1</color>
+    <color name="vidacha">#EC1D18</color>
+    <color name="info">#0DE316</color>
+    <color name="gray">#9E9F9E</color>
+</resources>

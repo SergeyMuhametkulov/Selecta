@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuActivity">
+
+    <Button
+        android:id="@+id/btn_priem"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/btn_vidacha"
+        android:background="@drawable/btn_priem"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/priem" />
+
+    <Button
+        android:id="@+id/btn_vidacha"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/btn_editor"
+        android:background="@drawable/btn_vidacha"
+        android:layout_width="160dp"
+        android:layout_marginBottom="5dp"
+        android:layout_height="wrap_content"
+        android:text="@string/vidacha" />
+
+    <Button
+        android:id="@+id/btn_editor"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/btn_editor"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/btn_info"
+        android:text="@string/editor" />
+
+    <Button
+        android:id="@+id/btn_info"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_info"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:text="@string/info" />
+
+    <ImageView
+        android:id="@+id/imageVinny"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/vinny" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/imageVinny"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text="@string/hi" />
+</RelativeLayout>

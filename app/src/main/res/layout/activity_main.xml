@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <EditText
+        android:id="@+id/edLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp"
+        android:inputType="text"
+        android:hint="@string/login"
+        android:textColorHint="@color/gray"
+        android:textColor="@color/black"
+        android:padding="20dp"
+        android:textSize="25dp" />
+
+
+    <EditText
+        android:id="@+id/edPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edLogin"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="-17dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/pass"
+        android:inputType="textPassword"
+        android:padding="20dp"
+        android:textColorHint="@color/gray"
+        android:textColor="@color/black"
+        android:textSize="25dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:text="@string/in"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/btn_blue"
+        android:id="@+id/btn_in"
+        android:layout_below="@id/edPass"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btn_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:textColor="#05188C"
+        android:layout_below="@id/btn_in"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/reg" />
+</RelativeLayout>
