@@ -24,6 +24,10 @@
     <string name="location">место хранения</string>
     <string name="name_product">название</string>
     <string name="param">параметры</string>
+    <string name="add_location">добавить место</string>
+    <string name="change_location">переместить</string>
+    <string name="add">Добавить</string>
+
 
 
 </resources>

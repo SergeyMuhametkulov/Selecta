@@ -6,7 +6,6 @@
     android:orientation="vertical">
 
 
-
     <Spinner
         android:id="@+id/spinner_material"
         android:layout_width="match_parent"

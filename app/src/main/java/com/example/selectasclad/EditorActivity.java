@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EditorActivity extends AppCompatActivity {
-    Button addNewProduct;
-    DatabaseReference aluminDataBase,metDataBase;
+    Button addNewProduct,addNewLocation,changeLocation;
+    DatabaseReference aluminDataBase,metDataBase,locationDataBase;
     Product newProduct;
     List<String> listLocation,listMaterial;
 
@@ -36,12 +36,22 @@ public class EditorActivity extends AppCompatActivity {
 
         aluminDataBase = FirebaseDatabase.getInstance().getReference("Alumin");
         metDataBase = FirebaseDatabase.getInstance().getReference("Met");
+        locationDataBase = FirebaseDatabase.getInstance().getReference("location");
 
         addNewProduct = findViewById(R.id.btn_add_new_product);
+        addNewLocation = findViewById(R.id.btn_add_location);
+        changeLocation = findViewById(R.id.btn_change_location);
+
         addNewProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialog();
+            }
+        });
+        addNewLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addNewLocation();
             }
         });
 
@@ -49,6 +59,28 @@ public class EditorActivity extends AppCompatActivity {
         listMaterial = new ArrayList<>();
         initList();
 
+    }
+
+    private void addNewLocation() {
+        AlertDialog.Builder lBuilder = new AlertDialog.Builder(EditorActivity.this);
+        View lView = getLayoutInflater().inflate(R.layout.dialog_add_new_loc,null);
+        EditText edtTxtNewLocation = lView.findViewById(R.id.edt_txt_new_location);
+        lBuilder.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(TextUtils.isEmpty(edtTxtNewLocation.getText().toString())){
+                    Toast.makeText(EditorActivity.this, "Ведите место", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                locationDataBase.push().setValue(edtTxtNewLocation.getText().toString());
+
+            }
+        });
+
+
+        lBuilder.setView(lView);
+        AlertDialog dialog = lBuilder.create();
+        dialog.show();
     }
 
     private void initList() {

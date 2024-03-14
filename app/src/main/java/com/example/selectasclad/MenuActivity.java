@@ -51,13 +51,19 @@ public class MenuActivity extends AppCompatActivity {
         };
         priem.setOnClickListener(onClickListener);
         vidacha.setOnClickListener(onClickListener);
-        info.setOnClickListener(onClickListener);
 
         editor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Intent ed_intent = new Intent(MenuActivity.this, EditorActivity.class);
-                startActivity(ed_intent);
+               Intent edIntent = new Intent(MenuActivity.this, EditorActivity.class);
+                startActivity(edIntent);
+            }
+        });
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Intent infoIntent = new Intent(MenuActivity.this,InfoActivity.class);
+                startActivity(infoIntent);
             }
         });
 
