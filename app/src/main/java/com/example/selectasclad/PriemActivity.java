@@ -2,9 +2,11 @@ package com.example.selectasclad;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -13,6 +15,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,12 +28,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PriemActivity extends AppCompatActivity {
-    private String material,article,name,param,location,total;
+    private String material,article,name,param,total;
     private Intent intent;
     DatabaseReference aluminDataBase,metDataBase;
-    TextView textMaterial,textArticle,textName,textParam,textLocation,textTotal,textKey;
+    TextView textMaterial,textArticle,textName,textParam,textTotal;
     EditText editTextAddTotal;
     Button btnAdd;
+    Toolbar toolbar;
     String productDatabaseKey;
 
     @Override
@@ -37,15 +42,20 @@ public class PriemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_priem);
 
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Прием товара");
+        toolbar.setBackgroundColor(getResources().getColor(R.color.priem));
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         aluminDataBase = FirebaseDatabase.getInstance().getReference("Alumin");
         metDataBase = FirebaseDatabase.getInstance().getReference("Met");
+
         textMaterial = findViewById(R.id.textMaterial);
         textArticle = findViewById(R.id.textArticle);
         textName = findViewById(R.id.textName);
         textParam = findViewById(R.id.textParam);
-        textLocation = findViewById(R.id.textLocation);
         textTotal = findViewById(R.id.textTotal);
-        textKey = findViewById(R.id.textKey);
         editTextAddTotal = findViewById(R.id.editTextTotal);
         btnAdd = findViewById(R.id.btn_add_new_total);
 
@@ -54,22 +64,71 @@ public class PriemActivity extends AppCompatActivity {
         article = intent.getStringExtra("article");
         name = intent.getStringExtra("name");
         param = intent.getStringExtra("param");
-        location = intent.getStringExtra("location");
         total = intent.getStringExtra("total");
         textMaterial.setText(material);
         textArticle.setText(article);
         textName.setText(name);
         textParam.setText(param);
-        textLocation.setText(location);
-        textTotal.setText(total);
+        textTotal.setText("Кол-во: " + total);
         getKeySelectProduct();
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addNewTotal();
+            }
+        });
 
 
     }
+
+    private void addNewTotal() {
+        int newTotal = 0;
+        if(TextUtils.isEmpty(editTextAddTotal.getText().toString())){
+            Toast.makeText(this, "Введите кол-во", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        newTotal = Integer.parseInt(total) + Integer.parseInt(editTextAddTotal.getText().toString());
+        if(material.equals("алюминий")){
+            aluminDataBase.child(productDatabaseKey).child("total").setValue(String.valueOf(newTotal)).
+            addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(PriemActivity.this, "Принято " + editTextAddTotal.getText().toString(), Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(PriemActivity.this, "ОШИБКА", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    });
+
+        }if(material.equals("железо")){
+            metDataBase.child(productDatabaseKey).child("total").setValue(String.valueOf(newTotal)).
+            addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(PriemActivity.this, "Принято " + editTextAddTotal.getText().toString(), Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(PriemActivity.this, "ОШИБКА", Toast.LENGTH_SHORT).show();
+                            finish();
+
+                        }
+                    });
+
+        }
+
+
+    }
+
     public void getKeySelectProduct(){
 
         if(material.equals("алюминий")){
-            Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show();
             Query query = aluminDataBase.orderByChild("name").equalTo(name);
             query.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -78,7 +137,6 @@ public class PriemActivity extends AppCompatActivity {
                         Product product = ds.getValue(Product.class);
                         if(product.getParam().equals(param)){
                             productDatabaseKey = ds.getKey();
-                            textKey.setText(productDatabaseKey);
                             break;
 
                         }
@@ -102,7 +160,6 @@ public class PriemActivity extends AppCompatActivity {
                         assert product != null;
                         if(product.getParam().equals(param)){
                             productDatabaseKey = ds.getKey();
-                            textKey.setText(productDatabaseKey);
                             break;
                         }
                     }
