@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -28,9 +29,11 @@ public class VidachaActivity extends AppCompatActivity {
     DatabaseReference aluminDataBase,metDataBase;
     TextView textMaterial,textArticle,textName,textParam,textTotal;
     EditText editTextGetTotal;
+    int newTotal;
     Button btnGet;
     Toolbar toolbar;
-    String productDatabaseKey;
+    String productDatabaseKey,subject,emailText;
+    String[] addresses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,10 @@ public class VidachaActivity extends AppCompatActivity {
 
         aluminDataBase = FirebaseDatabase.getInstance().getReference("Alumin");
         metDataBase = FirebaseDatabase.getInstance().getReference("Met");
+
+        addresses = new String[1];
+        addresses[0] = "mahey10725@gmail.com";
+        subject = "выдача";
 
         textMaterial = findViewById(R.id.textMaterial);
         textArticle = findViewById(R.id.textArticle);
@@ -76,7 +83,6 @@ public class VidachaActivity extends AppCompatActivity {
     }
 
     private void getTotal() {
-        int newTotal = 0;
         if(TextUtils.isEmpty(editTextGetTotal.getText().toString())){
             Toast.makeText(this, "Введите кол-во", Toast.LENGTH_SHORT).show();
             return;
@@ -91,6 +97,7 @@ public class VidachaActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void unused) {
                             Toast.makeText(VidachaActivity.this, "Выдано " + editTextGetTotal.getText().toString(), Toast.LENGTH_SHORT).show();
+                            sendToEmail(String.valueOf(newTotal));
                             finish();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -107,6 +114,13 @@ public class VidachaActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void unused) {
                             Toast.makeText(VidachaActivity.this, "Выдано " + editTextGetTotal.getText().toString(), Toast.LENGTH_SHORT).show();
+                            sendToEmail(String.valueOf(newTotal));
+                            finish();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(VidachaActivity.this, "ОШИБКА", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     });
@@ -158,5 +172,19 @@ public class VidachaActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+    private void sendToEmail(String newTotal) {
+        emailText ="" + material + " " + name + " " + param +". "
+                + "Выдано " + editTextGetTotal.getText().toString() +
+                ".  Было " + total + ", Осталось " + newTotal;
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.putExtra(Intent.EXTRA_EMAIL,addresses);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT,subject);
+        emailIntent.putExtra(Intent.EXTRA_TEXT,emailText);
+        if(emailIntent.resolveActivity(getPackageManager()) != null){
+            startActivity(emailIntent);
+        }
+
     }
 }

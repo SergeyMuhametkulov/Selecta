@@ -1,7 +1,9 @@
 package com.example.selectasclad;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -15,8 +17,11 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +31,7 @@ public class EditorActivity extends AppCompatActivity {
     DatabaseReference aluminDataBase,metDataBase,locationDataBase;
     Product newProduct;
     List<String> listLocation,listMaterial;
+    Toolbar toolbar;
 
 
 
@@ -37,6 +43,11 @@ public class EditorActivity extends AppCompatActivity {
         aluminDataBase = FirebaseDatabase.getInstance().getReference("Alumin");
         metDataBase = FirebaseDatabase.getInstance().getReference("Met");
         locationDataBase = FirebaseDatabase.getInstance().getReference("location");
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("РЕДАКТОР");
+        toolbar.setBackgroundColor(getResources().getColor(R.color.editor));
 
         addNewProduct = findViewById(R.id.btn_add_new_product);
         addNewLocation = findViewById(R.id.btn_add_location);
@@ -86,8 +97,20 @@ public class EditorActivity extends AppCompatActivity {
     private void initList() {
         listMaterial.add("железо");
         listMaterial.add("алюминий");
-        listLocation.add("ворота 1");
-        listLocation.add("ворота 2");
+        locationDataBase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listLocation.clear();
+                for(DataSnapshot ds: snapshot.getChildren()){
+                    listLocation.add(ds.getValue(String.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public  void showDialog(){

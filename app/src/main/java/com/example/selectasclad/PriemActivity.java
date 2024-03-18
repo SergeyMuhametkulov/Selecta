@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -34,8 +35,11 @@ public class PriemActivity extends AppCompatActivity {
     TextView textMaterial,textArticle,textName,textParam,textTotal;
     EditText editTextAddTotal;
     Button btnAdd;
+    int newTotal ;
     Toolbar toolbar;
-    String productDatabaseKey;
+
+    String productDatabaseKey,subject,emailText;
+    String[] addresses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +50,14 @@ public class PriemActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Прием товара");
         toolbar.setBackgroundColor(getResources().getColor(R.color.priem));
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         aluminDataBase = FirebaseDatabase.getInstance().getReference("Alumin");
         metDataBase = FirebaseDatabase.getInstance().getReference("Met");
+
+        addresses = new String[1];
+        addresses[0] = "mahey10725@gmail.com";
+        subject = "прием";
 
         textMaterial = findViewById(R.id.textMaterial);
         textArticle = findViewById(R.id.textArticle);
@@ -82,7 +90,7 @@ public class PriemActivity extends AppCompatActivity {
     }
 
     private void addNewTotal() {
-        int newTotal = 0;
+
         if(TextUtils.isEmpty(editTextAddTotal.getText().toString())){
             Toast.makeText(this, "Введите кол-во", Toast.LENGTH_SHORT).show();
             return;
@@ -94,6 +102,7 @@ public class PriemActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Void unused) {
                     Toast.makeText(PriemActivity.this, "Принято " + editTextAddTotal.getText().toString(), Toast.LENGTH_SHORT).show();
+                    sendToEmail(String.valueOf(newTotal));
                     finish();
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -110,6 +119,7 @@ public class PriemActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Void unused) {
                     Toast.makeText(PriemActivity.this, "Принято " + editTextAddTotal.getText().toString(), Toast.LENGTH_SHORT).show();
+                    sendToEmail(String.valueOf(newTotal));
                     finish();
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -123,6 +133,21 @@ public class PriemActivity extends AppCompatActivity {
 
         }
 
+
+    }
+
+    private void sendToEmail(String newTotal) {
+        emailText ="" + material + " " + name + " " + param +". "
+                + "Принято " + editTextAddTotal.getText().toString() +
+                  ".  Было " + total + ", Стало " + newTotal;
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.putExtra(Intent.EXTRA_EMAIL,addresses);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT,subject);
+        emailIntent.putExtra(Intent.EXTRA_TEXT,emailText);
+        if(emailIntent.resolveActivity(getPackageManager()) != null){
+            startActivity(emailIntent);
+        }
 
     }
 
