@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PriemActivity extends AppCompatActivity {
-    private String material,article,name,param,total;
+    private String id, material,article,name,param,total;
     private Intent intent;
     DatabaseReference aluminDataBase,metDataBase;
     TextView textMaterial,textArticle,textName,textParam,textTotal;
@@ -68,6 +68,7 @@ public class PriemActivity extends AppCompatActivity {
         btnAdd = findViewById(R.id.btn_add_new_total);
 
         intent = getIntent();
+        id = intent.getStringExtra("id");
         material = intent.getStringExtra("material");
         article = intent.getStringExtra("article");
         name = intent.getStringExtra("name");
@@ -95,9 +96,11 @@ public class PriemActivity extends AppCompatActivity {
             Toast.makeText(this, "Введите кол-во", Toast.LENGTH_SHORT).show();
             return;
         }
+
         newTotal = Integer.parseInt(total) + Integer.parseInt(editTextAddTotal.getText().toString());
+
         if(material.equals("алюминий")){
-            aluminDataBase.child(productDatabaseKey).child("total").setValue(String.valueOf(newTotal)).
+            aluminDataBase.child(id).child("total").setValue(String.valueOf(newTotal)).
             addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
@@ -113,8 +116,9 @@ public class PriemActivity extends AppCompatActivity {
                         }
                     });
 
-        }if(material.equals("железо")){
-            metDataBase.child(productDatabaseKey).child("total").setValue(String.valueOf(newTotal)).
+        }
+        if(material.equals("железо")){
+            metDataBase.child(id).child("total").setValue(String.valueOf(newTotal)).
             addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {

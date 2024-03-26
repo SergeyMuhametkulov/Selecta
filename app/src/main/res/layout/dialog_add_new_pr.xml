@@ -29,6 +29,12 @@
         android:textSize="32dp"
         android:textColorHint="@color/gray"
         android:hint="@string/name_product" />
+
+    <Spinner
+        android:id="@+id/spinner_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
     <EditText
         android:id="@+id/ed_txt_param"
         android:layout_width="match_parent"
@@ -39,10 +45,11 @@
         android:textColorHint="@color/gray"
         android:hint="@string/param" />
     <Spinner
-        android:id="@+id/spinner_location"
+        android:id="@+id/spinner_unit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+
 
 
 </LinearLayout>

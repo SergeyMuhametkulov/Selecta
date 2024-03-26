@@ -24,7 +24,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class VidachaActivity extends AppCompatActivity {
-    private String material,article,name,param,total;
+    private String id, material,article,name,param,total;
     private Intent intent;
     DatabaseReference aluminDataBase,metDataBase;
     TextView textMaterial,textArticle,textName,textParam,textTotal;
@@ -32,7 +32,7 @@ public class VidachaActivity extends AppCompatActivity {
     int newTotal;
     Button btnGet;
     Toolbar toolbar;
-    String productDatabaseKey,subject,emailText;
+    String subject,emailText;
     String[] addresses;
 
     @Override
@@ -68,6 +68,7 @@ public class VidachaActivity extends AppCompatActivity {
         });
 
         intent = getIntent();
+        id = intent.getStringExtra("id");
         material = intent.getStringExtra("material");
         article = intent.getStringExtra("article");
         name = intent.getStringExtra("name");
@@ -78,7 +79,7 @@ public class VidachaActivity extends AppCompatActivity {
         textName.setText(name);
         textParam.setText(param);
         textTotal.setText("Кол-во: " + total);
-        getKeySelectProduct();
+
 
     }
 
@@ -92,25 +93,8 @@ public class VidachaActivity extends AppCompatActivity {
         }
         newTotal = Integer.parseInt(total) - Integer.parseInt(editTextGetTotal.getText().toString());
         if(material.equals("алюминий")){
-            aluminDataBase.child(productDatabaseKey).child("total").setValue(String.valueOf(newTotal))
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(VidachaActivity.this, "Выдано " + editTextGetTotal.getText().toString(), Toast.LENGTH_SHORT).show();
-                            sendToEmail(String.valueOf(newTotal));
-                            finish();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(VidachaActivity.this, "ОШИБКА", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }
-                    });
-
-        }if(material.equals("железо")){
-            metDataBase.child(productDatabaseKey).child("total").setValue(String.valueOf(newTotal))
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+            aluminDataBase.child(id).child("total").setValue(String.valueOf(newTotal)).
+                    addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             Toast.makeText(VidachaActivity.this, "Выдано " + editTextGetTotal.getText().toString(), Toast.LENGTH_SHORT).show();
@@ -126,53 +110,28 @@ public class VidachaActivity extends AppCompatActivity {
                     });
 
         }
-
-    }
-    public void getKeySelectProduct(){
-
-        if(material.equals("алюминий")){
-            Query query = aluminDataBase.orderByChild("name").equalTo(name);
-            query.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot ds: snapshot.getChildren()){
-                        Product product = ds.getValue(Product.class);
-                        if(product.getParam().equals(param)){
-                            productDatabaseKey = ds.getKey();
-                            break;
+        if(material.equals("железо")){
+            metDataBase.child(id).child("total").setValue(String.valueOf(newTotal)).
+                    addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(VidachaActivity.this, "Принято " + editTextGetTotal.getText().toString(), Toast.LENGTH_SHORT).show();
+                            sendToEmail(String.valueOf(newTotal));
+                            finish();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(VidachaActivity.this, "ОШИБКА", Toast.LENGTH_SHORT).show();
+                            finish();
 
                         }
-                    }
+                    });
 
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }if(material.equals("железо")){
-            Query query = metDataBase.orderByChild("name").equalTo(name);
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot ds : snapshot.getChildren()){
-                        Product product = ds.getValue(Product.class);
-                        assert product != null;
-                        if(product.getParam().equals(param)){
-                            productDatabaseKey = ds.getKey();
-                            break;
-                        }
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
         }
+
     }
+
     private void sendToEmail(String newTotal) {
         emailText ="" + material + " " + name + " " + param +". "
                 + "Выдано " + editTextGetTotal.getText().toString() +

@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:text="@string/in"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/btn_blue"
+        android:background="@drawable/btn_alumin"
         android:id="@+id/btn_in"
         android:layout_below="@id/edPass"
         android:layout_height="wrap_content"/>

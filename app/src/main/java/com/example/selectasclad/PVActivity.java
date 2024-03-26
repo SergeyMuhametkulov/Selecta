@@ -152,7 +152,7 @@ public class PVActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectProduct = al_box.get(i);
-                goToNextActivity(selectProduct.getMaterial(),selectProduct.getArticle(),selectProduct.getName()
+                goToNextActivity(selectProduct.getId(),selectProduct.getMaterial(),selectProduct.getArticle(),selectProduct.getName()
                         ,selectProduct.getParam(),selectProduct.getLocation(),selectProduct.getTotal());
             }
         });
@@ -187,7 +187,7 @@ public class PVActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectProduct = al_pipe.get(i);
-                goToNextActivity(selectProduct.getMaterial(),selectProduct.getArticle(),selectProduct.getName()
+                goToNextActivity(selectProduct.getId(),selectProduct.getMaterial(),selectProduct.getArticle(),selectProduct.getName()
                         ,selectProduct.getParam(),selectProduct.getLocation(),selectProduct.getTotal());
             }
         });
@@ -223,7 +223,7 @@ public class PVActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectProduct = al_sheet.get(i);
-                goToNextActivity(selectProduct.getMaterial(),selectProduct.getArticle(),selectProduct.getName()
+                goToNextActivity(selectProduct.getId(),selectProduct.getMaterial(),selectProduct.getArticle(),selectProduct.getName()
                         ,selectProduct.getParam(),selectProduct.getLocation(),selectProduct.getTotal());
             }
         });
@@ -258,7 +258,7 @@ public class PVActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectProduct = al_profile.get(i);
-                goToNextActivity(selectProduct.getMaterial(),selectProduct.getArticle(),selectProduct.getName()
+                goToNextActivity(selectProduct.getId(),selectProduct.getMaterial(),selectProduct.getArticle(),selectProduct.getName()
                         ,selectProduct.getParam(),selectProduct.getLocation(),selectProduct.getTotal());
             }
         });
@@ -291,7 +291,7 @@ public class PVActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectProduct = met_box.get(i);
-                goToNextActivity(selectProduct.getMaterial(),selectProduct.getArticle(),selectProduct.getName()
+                goToNextActivity(selectProduct.getId(),selectProduct.getMaterial(),selectProduct.getArticle(),selectProduct.getName()
                         ,selectProduct.getParam(),selectProduct.getLocation(),selectProduct.getTotal());
             }
         });
@@ -325,7 +325,7 @@ public class PVActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectProduct = met_pipe.get(i);
-                goToNextActivity(selectProduct.getMaterial(),selectProduct.getArticle(),selectProduct.getName()
+                goToNextActivity(selectProduct.getId(),selectProduct.getMaterial(),selectProduct.getArticle(),selectProduct.getName()
                         ,selectProduct.getParam(),selectProduct.getLocation(),selectProduct.getTotal());
             }
         });
@@ -359,7 +359,7 @@ public class PVActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectProduct = met_sheet.get(i);
-                goToNextActivity(selectProduct.getMaterial(),selectProduct.getArticle(),selectProduct.getName()
+                goToNextActivity(selectProduct.getId(),selectProduct.getMaterial(),selectProduct.getArticle(),selectProduct.getName()
                         ,selectProduct.getParam(),selectProduct.getLocation(),selectProduct.getTotal());
             }
         });
@@ -367,11 +367,12 @@ public class PVActivity extends AppCompatActivity {
     }
 
 
-    private void goToNextActivity(String material, String article, String name
+    private void goToNextActivity(String id, String material, String article, String name
             , String param,String location, String total){
         switch (message){
             case "priem":{
                 intent = new Intent(PVActivity.this,PriemActivity.class);
+                intent.putExtra("id",id);
                 intent.putExtra("material",material);
                 intent.putExtra("article",article);
                 intent.putExtra("name",name);
@@ -383,6 +384,7 @@ public class PVActivity extends AppCompatActivity {
             }
             case "vidacha":{
                 intent = new Intent(PVActivity.this,VidachaActivity.class);
+                intent.putExtra("id",id);
                 intent.putExtra("material",material);
                 intent.putExtra("article",article);
                 intent.putExtra("name",name);

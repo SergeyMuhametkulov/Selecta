@@ -1,8 +1,24 @@
 package com.example.selectasclad;
 
 public class Product {
-    private String material,article,name,param,location,total;
+    private String id, material,article,name,param,location,total,unit;
     public Product(){}
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getMaterial() {
         return material;
@@ -52,12 +68,15 @@ public class Product {
         this.total = total;
     }
 
-    public Product(String material, String article, String name, String param, String location, String total) {
+    public Product(String id,String material, String article, String name, String param, String location, String total,String unit) {
+        this.id = id;
         this.material = material;
         this.article = article;
         this.name = name;
         this.param = param;
         this.location = location;
         this.total = total;
+        this.unit = unit;
+
     }
 }
