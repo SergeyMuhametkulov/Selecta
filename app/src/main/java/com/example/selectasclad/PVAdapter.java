@@ -39,7 +39,7 @@ public class PVAdapter extends BaseAdapter {
             TextView text = view.findViewById(R.id.txt_select_product);
             Product selectProduct = (Product) getItem(i);
             text.setText(selectProduct.getMaterial()+" "+ selectProduct.getName()+": " +selectProduct.getParam()
-            +", место : "+selectProduct.getLocation());
+            +", место : "+selectProduct.getLocation() + ", кол-во "+selectProduct.getTotal()+" "+selectProduct.getUnit());
 
         }
         return view;

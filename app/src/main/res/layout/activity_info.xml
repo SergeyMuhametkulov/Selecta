@@ -4,7 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".InfoActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textColor="@color/black"
+        android:layout_below="@id/toolbar_info"
+        android:textSize="24dp"
+        android:text="Выберите место"/>
+
+    <Spinner
+        android:id="@+id/spinner_loc"
+        android:layout_below="@id/textView"
+        android:layout_margin="15dp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_info"
@@ -13,4 +31,20 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
+
+    <Button
+        android:id="@+id/btn_look_location"
+        android:layout_below="@id/spinner_loc"
+        android:layout_margin="10dp"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_alumin"
+        android:text="@string/look_location"/>
+
+    <ListView
+        android:id="@+id/listview_product_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_below="@id/btn_look_location"/>
 </RelativeLayout>

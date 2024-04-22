@@ -27,6 +27,7 @@
     <string name="add_location">добавить место</string>
     <string name="change_location">переместить</string>
     <string name="add">Добавить</string>
+    <string name="look_location">ПОСМОТРЕТЬ</string>
 
 
 </resources>

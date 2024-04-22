@@ -24,7 +24,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class VidachaActivity extends AppCompatActivity {
-    private String id, material,article,name,param,total;
+    private String id, material,article,name,param,total,unit;
     private Intent intent;
     DatabaseReference aluminDataBase,metDataBase;
     TextView textMaterial,textArticle,textName,textParam,textTotal;
@@ -74,11 +74,13 @@ public class VidachaActivity extends AppCompatActivity {
         name = intent.getStringExtra("name");
         param = intent.getStringExtra("param");
         total = intent.getStringExtra("total");
+        unit = intent.getStringExtra("unit");
         textMaterial.setText(material);
         textArticle.setText(article);
         textName.setText(name);
         textParam.setText(param);
         textTotal.setText("Кол-во: " + total);
+        editTextGetTotal.setHint("Введите кол-во в "+unit);
 
 
     }
@@ -115,7 +117,7 @@ public class VidachaActivity extends AppCompatActivity {
                     addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            Toast.makeText(VidachaActivity.this, "Принято " + editTextGetTotal.getText().toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(VidachaActivity.this, "Выдано " + editTextGetTotal.getText().toString(), Toast.LENGTH_SHORT).show();
                             sendToEmail(String.valueOf(newTotal));
                             finish();
                         }

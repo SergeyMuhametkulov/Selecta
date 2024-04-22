@@ -39,8 +39,7 @@ public class ChangeLocActivity extends AppCompatActivity {
     List<Product> productsInLocation,productsInNewLocation;
     Product selectProduct,productInLoc;
     ListView listView;
-    String location,changeTotal,newLocation,keyProductInLoc;
-    int newTotal,t;
+    String location,changeTotal,newLocation;
     Button btnChangeLoc;
     Boolean bool;
 
@@ -83,6 +82,7 @@ public class ChangeLocActivity extends AppCompatActivity {
 
 
 
+
         textSelectProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,11 +111,13 @@ public class ChangeLocActivity extends AppCompatActivity {
         btnChangeLoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(selectProduct.getMaterial().equals("алюминий")){
-                    addNewTotal(aluminDataBase);
+                    addProductInNewLoc(bool,aluminDataBase,productInLoc);
                 }
                 if (selectProduct.getMaterial().equals("железо")){
-                    addNewTotal(metDataBase);
+                    addProductInNewLoc(bool,metDataBase,productInLoc);
+
                 }else return;
             }
         });
@@ -138,14 +140,18 @@ public class ChangeLocActivity extends AppCompatActivity {
         db.addValueEventListener(new ValueEventListener() {
                @Override
                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                   productInLoc = new Product("1",selectProduct.getMaterial(),selectProduct.getArticle(),
+                           selectProduct.getName(),selectProduct.getParam(),newLocation,"0",selectProduct.getUnit());
                    for(DataSnapshot ds : snapshot.getChildren()){
-                       Product pr = ds.getValue(Product.class);
-                       if(pr.getArticle().equals(selectProduct.getArticle()) && pr.getLocation().equals(newLocation)){
-                           productInLoc = pr;
+                       Product pro = ds.getValue(Product.class);
+                       if(pro.getArticle().equals(selectProduct.getArticle()) && pro.getLocation().equals(newLocation)
+                               && pro.getUnit().equals(selectProduct.getUnit())){
+                           productInLoc = pro;
                            bool = false;
                            break;
                        }
                    }
+
                }
 
 
@@ -156,29 +162,29 @@ public class ChangeLocActivity extends AppCompatActivity {
 
         });
 
-        if(bool){
-            String newId = db.push().getKey();
-            int n = Integer.parseInt(selectProduct.getTotal()) - Integer.parseInt(changeTotal);
-            db.child(newId).setValue(new Product(newId,selectProduct.getMaterial(),selectProduct.getArticle(),
-                    selectProduct.getName(),selectProduct.getParam(),newLocation,changeTotal,selectProduct.getUnit()));
-            if (n>0){
-                db.child(selectProduct.getId()).child("total").setValue(String.valueOf(n));
-            }else {
-                db.child(selectProduct.getId()).removeValue();
-            }
-
-        }
-        finish();
-
 
     }
 
-    private void addNewTotal(DatabaseReference database) {
-        int m = Integer.parseInt(changeTotal) + Integer.parseInt(productInLoc.getTotal());
+    private void addProductInNewLoc(Boolean b,DatabaseReference db,Product product) {
+        Product pr = product;
+        if(pr.getTotal().equals("0")){
+            Toast.makeText(this, "0000000", Toast.LENGTH_SHORT).show();
+            String newId = db.push().getKey();
+            pr = new Product(newId,selectProduct.getMaterial(),selectProduct.getArticle(),
+                    selectProduct.getName(),selectProduct.getParam(),newLocation,"0",selectProduct.getUnit());
+            db.child(newId).setValue(pr);
+        }
+
+        addNewTotal(db,pr);
+    }
+
+    private void addNewTotal(DatabaseReference database,Product pr) {
+
+        int m = Integer.parseInt(changeTotal) + Integer.parseInt(pr.getTotal());
         int k = Integer.parseInt(selectProduct.getTotal()) - Integer.parseInt(changeTotal);
         String l = String.valueOf(m);
         String s = String.valueOf(k);
-        database.child(productInLoc.getId()).child("total").setValue(l).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.child(pr.getId()).child("total").setValue(l).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(ChangeLocActivity.this, "ПЕРЕМЕЩЕНИЕ ВЫПОЛНЕНО", Toast.LENGTH_SHORT).show();
@@ -231,6 +237,7 @@ public class ChangeLocActivity extends AppCompatActivity {
                 textNewLocation.setText("ПЕРЕМЕСТИТЬ В : " + listLoc.get(i));
                 newLocation = listLoc.get(i);
                 btnChangeLoc.setVisibility(View.VISIBLE);
+
 
                 dialog.dismiss();
                 if(selectProduct.getMaterial().equals("алюминий")){

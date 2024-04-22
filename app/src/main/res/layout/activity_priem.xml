@@ -91,7 +91,6 @@
         android:textStyle="bold"
         android:textSize="32dp"
         android:textColor="@color/black"
-        android:hint="Введите кол-во"
         android:textColorHint="@color/gray"
         android:gravity="center"
         android:inputType="number"/>

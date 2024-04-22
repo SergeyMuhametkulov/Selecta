@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PriemActivity extends AppCompatActivity {
-    private String id, material,article,name,param,total;
+    private String id, material,article,name,param,total,unit;
     private Intent intent;
     DatabaseReference aluminDataBase,metDataBase;
     TextView textMaterial,textArticle,textName,textParam,textTotal;
@@ -65,6 +65,7 @@ public class PriemActivity extends AppCompatActivity {
         textParam = findViewById(R.id.textParam);
         textTotal = findViewById(R.id.textTotal);
         editTextAddTotal = findViewById(R.id.editTextTotal);
+
         btnAdd = findViewById(R.id.btn_add_new_total);
 
         intent = getIntent();
@@ -74,11 +75,13 @@ public class PriemActivity extends AppCompatActivity {
         name = intent.getStringExtra("name");
         param = intent.getStringExtra("param");
         total = intent.getStringExtra("total");
+        unit = intent.getStringExtra("unit");
         textMaterial.setText(material);
         textArticle.setText(article);
         textName.setText(name);
         textParam.setText(param);
         textTotal.setText("Кол-во: " + total);
+        editTextAddTotal.setHint("Введите кол-во в "+unit);
         getKeySelectProduct();
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
